@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Alura.Estacionamento.Modelos
 {
-    public class Veiculo
+    public class Veiculo : IEnumerable<object[]>
     {
         //Campos    
         private string _placa;
         private string _proprietario;
         private TipoVeiculo _tipo;
-     
+
         //Propriedades   
 
         public string Placa
@@ -95,6 +95,39 @@ namespace Alura.Estacionamento.Modelos
            Proprietario = proprietario;
         }
 
-       
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            yield return new object[]
+            {
+                new Veiculo
+                {
+                    Proprietario = "André Silva",
+                    Placa = "ASD-9999",
+                    Cor="Verde",
+                    Modelo="Fusca"
+                }
+            };
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public void AlterarDados(Veiculo veiculoAlterado)
+        {
+            this.Proprietario = veiculoAlterado.Proprietario;
+            this.Modelo = veiculoAlterado.Modelo;
+            this.Largura = veiculoAlterado.Largura;
+            this.Cor = veiculoAlterado.Cor;
+        }
+
+        public override string ToString()
+        {
+            return $"Ficha do Veículo:\n" +
+                   $"Tipo do Veículo: { this.Tipo.ToString()} \n" +          
+                   $"Proprietário: {this.Proprietario}\n" +
+                   $"Modelo: {this.Modelo}\n" +
+                   $"Cor:{this.Cor}\n"+
+                   $"Placa:{this.Placa}\n";
+
+        }
     }
 }
