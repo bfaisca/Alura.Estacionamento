@@ -1,29 +1,36 @@
 using Alura.Estacionamento.Alura.Estacionamento.Modelos;
 using Alura.Estacionamento.Modelos;
+using Xunit.Abstractions;
 
 namespace Alura.Estacionamento.Testes
 {
-    public class VeiculoTestes
+    public class VeiculoTestes: IDisposable
     {
+        private Veiculo veiculo;
+        public ITestOutputHelper SaidaConsoleTeste;
 
-        [Fact(DisplayName ="Teste Nº1")]
-        [Trait("Funcionalidade","Acelerar")]
-        public void TestaVeiculoAcelerar()
+        public VeiculoTestes(ITestOutputHelper _saidaConsoleTeste)
+        {
+            SaidaConsoleTeste = _saidaConsoleTeste;
+            SaidaConsoleTeste.WriteLine("Construtor invocado!");
+
+            veiculo = new Veiculo();
+        }
+
+        [Fact]
+        public void TestaVeiculoAcelerarComParametro10()
         {
             // Arrange - Cenario
-            var veiculo = new Veiculo();
             veiculo.Acelerar(10);
             // Assert - Verificar Resultado
             Assert.Equal(100, veiculo.VelocidadeAtual);
         }
 
-        [Fact(DisplayName = "Teste Nº2")]
-        [Trait("Funcionalidade", "Frear")]
+        [Fact]
 
-        public void TestaVeiculoFrear()
+        public void TestaVeiculoFrearComParametro10()
         {
             // Arrange - Cenario
-            var veiculo = new Veiculo();
             // Act - Metodo
             veiculo.Frear(10);
             // Assert - Verificar Resultado
@@ -31,17 +38,16 @@ namespace Alura.Estacionamento.Testes
         }
 
         [Fact]
-        public void TesteTipoVeiculo()
+        public void TesteTipoVeiculoComValorDefault()
         {
             // Arrange - Cenario
-            var veiculo = new Veiculo();
             // Act - Metodo
             // Assert - Verificar Resultado
             Assert.Equal(TipoVeiculo.Automovel, veiculo.Tipo);
         }
 
         [Fact(Skip ="Teste ainda não implementado. Ignorar")]
-        public void TesteValidaNomeProprietario()
+        public void TesteValidaNomeProprietarioDoVeiculo()
         {
 
         }
@@ -51,7 +57,6 @@ namespace Alura.Estacionamento.Testes
         public void TestaVeiculoClass(Veiculo modelo)
         {
             //Arrange
-            var veiculo = new Veiculo();
 
             //Act
             veiculo.Acelerar(10);
@@ -62,10 +67,10 @@ namespace Alura.Estacionamento.Testes
         }
 
         [Fact]
-        public void TesteDadosVeiculo()
+        public void FichaDeInformacaoDoVeiculo()
         {
             //Arrange
-            var veiculo = new Veiculo
+            veiculo = new Veiculo
             {
                 Proprietario = "José Silva",
                 Placa = "ZXC-8524",
@@ -80,5 +85,9 @@ namespace Alura.Estacionamento.Testes
             Assert.Contains("Ficha do Veículo", dados);
         }
 
+        public void Dispose()
+        {
+            SaidaConsoleTeste.WriteLine("Execução do Cleanup: Limpando os objetos.");
+        }
     }
 }
