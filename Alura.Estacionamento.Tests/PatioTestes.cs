@@ -9,6 +9,7 @@ namespace Alura.Estacionamento.Testes
         private Veiculo veiculo;
         private Patio estacionamento;
         public ITestOutputHelper SaidaConsoleTeste;
+        private Operador operador;
 
         public PatioTestes(ITestOutputHelper _saidaConsoleTeste)
         {
@@ -17,12 +18,18 @@ namespace Alura.Estacionamento.Testes
 
             veiculo = new Veiculo();
             estacionamento = new Patio();
+            operador = new Operador();
         }
 
         [Fact]
         public void ValidaFaturamentoComAutomovel()
         {
             //Arrange
+
+            operador = new Operador
+            {
+                Nome = "Vagner"
+            };
 
             veiculo = new Veiculo
             {
@@ -33,6 +40,7 @@ namespace Alura.Estacionamento.Testes
                 Placa = "jlk-8000"
             };
 
+            estacionamento.OperadorPatio = operador;
             estacionamento.RegistrarEntradaVeiculo(veiculo);
             estacionamento.RegistrarSaidaVeiculo(veiculo.Placa);
 
@@ -53,6 +61,11 @@ namespace Alura.Estacionamento.Testes
         {
             //Arrange
 
+            operador = new Operador
+            {
+                Nome = "Jhonson"
+            };
+
             veiculo = new Veiculo
             {
                 Proprietario = proprietario,
@@ -60,6 +73,8 @@ namespace Alura.Estacionamento.Testes
                 Modelo = modelo,
                 Placa = placa
             };
+
+            estacionamento.OperadorPatio = operador;
             estacionamento.RegistrarEntradaVeiculo(veiculo);
             estacionamento.RegistrarSaidaVeiculo(veiculo.Placa);
 
@@ -77,6 +92,11 @@ namespace Alura.Estacionamento.Testes
         {
             //Arrange
 
+            operador = new Operador
+            {
+                Nome = "Paulo"
+            };
+
             veiculo = new Veiculo
             {
                 Proprietario = proprietario,
@@ -84,6 +104,8 @@ namespace Alura.Estacionamento.Testes
                 Modelo = modelo,
                 Placa = placa
             };
+
+            estacionamento.OperadorPatio = operador;
             estacionamento.RegistrarEntradaVeiculo(veiculo);
 
             //Act
@@ -96,6 +118,12 @@ namespace Alura.Estacionamento.Testes
         public void TesteAlterarDadosVeiculo()
         {
             //Arrange 
+
+            operador = new Operador
+            {
+                Nome = "Carlos"
+            };
+
             veiculo = new Veiculo
             {
                 Proprietario = "José Silva",
@@ -103,6 +131,8 @@ namespace Alura.Estacionamento.Testes
                 Cor = "Verde",
                 Modelo = "Opala"
             };
+
+            estacionamento.OperadorPatio = operador;
             estacionamento.RegistrarEntradaVeiculo(veiculo);
 
             var veiculoAlterado = new Veiculo

@@ -19,8 +19,12 @@ namespace Alura.Estacionamento.Modelos
         }
         private List<Veiculo> veiculos;
         private double faturado;
+        private Operador _operadorPatio;
+
         public double Faturado { get => faturado; set => faturado = value; }
-        public List<Veiculo> Veiculos { get => veiculos; set => veiculos = value; }       
+        public List<Veiculo> Veiculos { get => veiculos; set => veiculos = value; }
+        public Operador OperadorPatio { get => _operadorPatio; set => _operadorPatio = value; }
+
         public double TotalFaturado()
         {
             return this.Faturado;
@@ -109,7 +113,8 @@ namespace Alura.Estacionamento.Modelos
             string ticket = String.Concat("#### Ticket Estacionamento Faisca###",
                     ">>> Identificador: ", veiculo.IdTicket,
                     ">>> Data/Hora de entrada: ", DateTime.Now,
-                    ">>> Placa Veiculo:", veiculo.Placa
+                    ">>> Placa Veiculo:", veiculo.Placa,
+                    ">>> Operador Patio: ", this.OperadorPatio.Nome
                 );
             veiculo.Ticket = ticket;
             return ticket;
