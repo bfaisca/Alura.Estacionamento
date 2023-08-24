@@ -1,5 +1,6 @@
 using Alura.Estacionamento.Alura.Estacionamento.Modelos;
 using Alura.Estacionamento.Modelos;
+using System.Numerics;
 using Xunit.Abstractions;
 
 namespace Alura.Estacionamento.Testes
@@ -83,6 +84,46 @@ namespace Alura.Estacionamento.Testes
 
             //Assert
             Assert.Contains("Ficha do Veículo", dados);
+        }
+
+        [Fact]
+        public void TestaNomeProprietarioComMenosDeTresCaracteres()
+        {
+            //Arrange
+            string nomeProprietario = "AB";
+
+            Assert.Throws<FormatException>(
+                //Act
+                () => new Veiculo(nomeProprietario)
+                );
+        }
+
+        [Fact]
+        public void TestaMensagemDeExcecaoDoQuartoCaractereDaPlaca()
+        {
+            //Arrange
+            string placa = "ASDF8000";
+
+            //Act
+            var mensagem = Assert.Throws<FormatException>(
+                () => new Veiculo().Placa = placa
+                );
+
+            Assert.Equal("O 4° caractere deve ser um hífen",mensagem.Message);
+        }
+
+        [Fact]
+        public void TestaMensagemDeExcecaoUltimosCaracteresPlaca()
+        {
+            //Arrange
+            string placaFormatoErrado = "ASD-955U";
+
+            //Act
+            Assert.Throws<FormatException>(
+              //Act
+              () => new Veiculo().Placa = placaFormatoErrado
+          );
+
         }
 
         public void Dispose()
